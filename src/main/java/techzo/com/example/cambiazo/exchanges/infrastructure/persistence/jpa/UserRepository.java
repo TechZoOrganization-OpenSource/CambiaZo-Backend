@@ -7,6 +7,8 @@ import java.util.List;
 
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    List<User>getAllUsers();
+    List<User>findAll();
+
+    boolean existsByEmail(String email);
 
 }
