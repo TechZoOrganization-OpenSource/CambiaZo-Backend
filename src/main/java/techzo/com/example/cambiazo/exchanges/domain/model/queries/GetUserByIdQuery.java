@@ -1,8 +1,8 @@
 package techzo.com.example.cambiazo.exchanges.domain.model.queries;
 
-public record GetUseByIdQuery(Long id) {
+public record GetUserByIdQuery(Long id) {
 
-    public GetUseByIdQuery{
+    public GetUserByIdQuery {
         if (id == null) {
             throw new IllegalArgumentException("id cannot be null");
         }
