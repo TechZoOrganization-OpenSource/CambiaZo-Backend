@@ -29,11 +29,25 @@ public class UsersController {
         this.userCommandService=userCommandService;
         this.userQueryService=userQueryService;
     }
-
+  
     @PostMapping
     public ResponseEntity<UserResource>createUser(@RequestBody CreateUserResource resource){
         Optional<User> user= userCommandService.handle(CreateUserCommandFromResourceAssembler.toCommandFromResource(resource));
         return user.map(source ->new ResponseEntity<>(UserResourceFromEntityAssembler.toResourceFromEntity(source),CREATED)).orElseGet(()->ResponseEntity.notFound().build());
     }
+    
+    @GetMapping
+    public ResponseEntity<List<UserResource>>getAllUsers(){
+        var getAllUsersQuery=new GetAllUsersQuery();
+        var user = userQueryService.handle(getAllUsersQuery);
+        var userResource=user.stream().map(UserResourceFromEntityAssembler::toResourceFromEntity).toList();
+        return ResponseEntity.ok(userResource);
+    }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<UserResource>getUserById(@PathVariable Long id){
+        Optional<User>user=userQueryService.handle(new GetUserByIdQuery(id));
+        return user.map(source->ResponseEntity.ok(UserResourceFromEntityAssembler.toResourceFromEntity(source))).orElseGet(()->ResponseEntity.notFound().build());
+    }
+  
 }
