@@ -29,7 +29,13 @@ public class UsersController {
         this.userCommandService=userCommandService;
         this.userQueryService=userQueryService;
     }
-
+  
+    @PostMapping
+    public ResponseEntity<UserResource>createUser(@RequestBody CreateUserResource resource){
+        Optional<User> user= userCommandService.handle(CreateUserCommandFromResourceAssembler.toCommandFromResource(resource));
+        return user.map(source ->new ResponseEntity<>(UserResourceFromEntityAssembler.toResourceFromEntity(source),CREATED)).orElseGet(()->ResponseEntity.notFound().build());
+    }
+    
     @GetMapping
     public ResponseEntity<List<UserResource>>getAllUsers(){
         var getAllUsersQuery=new GetAllUsersQuery();
@@ -43,4 +49,5 @@ public class UsersController {
         Optional<User>user=userQueryService.handle(new GetUserByIdQuery(id));
         return user.map(source->ResponseEntity.ok(UserResourceFromEntityAssembler.toResourceFromEntity(source))).orElseGet(()->ResponseEntity.notFound().build());
     }
+  
 }
