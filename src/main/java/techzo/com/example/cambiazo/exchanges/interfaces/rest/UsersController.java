@@ -29,4 +29,11 @@ public class UsersController {
         this.userCommandService=userCommandService;
         this.userQueryService=userQueryService;
     }
+
+    @PostMapping
+    public ResponseEntity<UserResource>createUser(@RequestBody CreateUserResource resource){
+        Optional<User> user= userCommandService.handle(CreateUserCommandFromResourceAssembler.toCommandFromResource(resource));
+        return user.map(source ->new ResponseEntity<>(UserResourceFromEntityAssembler.toResourceFromEntity(source),CREATED)).orElseGet(()->ResponseEntity.notFound().build());
+    }
+
 }
