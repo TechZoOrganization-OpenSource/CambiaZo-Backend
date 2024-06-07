@@ -4,7 +4,7 @@ import techzo.com.example.cambiazo.donations.domain.model.commands.CreateCategor
 import techzo.com.example.cambiazo.donations.interfaces.rest.resources.CreateCategoryOngResource;
 
 public class CreateCategoryOngCommandFromResourceAssembler {
-    public static CreateCategoryOngCommand fromResource(CreateCategoryOngResource resource) {
+    public static CreateCategoryOngCommand toCommandFromResource(CreateCategoryOngResource resource) {
         return new CreateCategoryOngCommand(resource.name());
     }
 }
