@@ -1,15 +1,15 @@
-package techzo.com.example.cambiazo.donations.domain.model.aggregates;
+package techzo.com.example.cambiazo.exchanges.domain.model.aggregates;
+
 
 import jakarta.persistence.*;
 import lombok.Getter;
 import org.springframework.data.domain.AbstractAggregateRoot;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import techzo.com.example.cambiazo.donations.domain.model.commands.CreateCategoryOngCommand;
+import techzo.com.example.cambiazo.exchanges.domain.model.commands.CreateProductCategoryCommand;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-public class CategoryOng extends AbstractAggregateRoot<CategoryOng> {
-
+public class ProductCategory extends AbstractAggregateRoot<ProductCategory> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter
@@ -19,9 +19,9 @@ public class CategoryOng extends AbstractAggregateRoot<CategoryOng> {
     @Getter
     private String name;
 
-    protected CategoryOng() {}
+    protected ProductCategory() {}
 
-    public CategoryOng(CreateCategoryOngCommand command) {
+    public ProductCategory(CreateProductCategoryCommand command) {
         this.name = command.name();
     }
 }

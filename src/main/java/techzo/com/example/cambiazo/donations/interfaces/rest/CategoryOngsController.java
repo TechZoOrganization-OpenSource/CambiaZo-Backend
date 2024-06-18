@@ -2,7 +2,7 @@ package techzo.com.example.cambiazo.donations.interfaces.rest;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import techzo.com.example.cambiazo.donations.domain.model.aggregates.CategoryOng;
+import techzo.com.example.cambiazo.donations.domain.model.entities.CategoryOng;
 import techzo.com.example.cambiazo.donations.domain.model.queries.GetAllCategoryOngsQuery;
 import techzo.com.example.cambiazo.donations.domain.model.queries.GetCategoryOngByIdQuery;
 import techzo.com.example.cambiazo.donations.domain.services.CategoryOngCommandService;
