@@ -1,4 +1,4 @@
-package techzo.com.example.cambiazo.donations.domain.model.aggregates;
+package techzo.com.example.cambiazo.donations.domain.model.entities;
 
 import jakarta.persistence.*;
 import lombok.Getter;

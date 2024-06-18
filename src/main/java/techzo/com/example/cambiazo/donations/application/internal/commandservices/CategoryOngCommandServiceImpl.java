@@ -1,7 +1,7 @@
 package techzo.com.example.cambiazo.donations.application.internal.commandservices;
 
 import org.springframework.stereotype.Service;
-import techzo.com.example.cambiazo.donations.domain.model.aggregates.CategoryOng;
+import techzo.com.example.cambiazo.donations.domain.model.entities.CategoryOng;
 import techzo.com.example.cambiazo.donations.domain.model.commands.CreateCategoryOngCommand;
 import techzo.com.example.cambiazo.donations.domain.services.CategoryOngCommandService;
 import techzo.com.example.cambiazo.donations.infrastructure.persistence.jpa.CategoryOngRepository;
