@@ -26,4 +26,16 @@ public class UserCommandServiceImpl implements UserCommandService {
         var createdUser = userRepository.save(user);
         return Optional.of(createdUser);
     }
+
+
+    @Override
+    public boolean handleDeleteUser(Long id) {
+        Optional<User> user = userRepository.findById(id);
+        if (user.isPresent()) {
+            userRepository.delete(user.get());
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
