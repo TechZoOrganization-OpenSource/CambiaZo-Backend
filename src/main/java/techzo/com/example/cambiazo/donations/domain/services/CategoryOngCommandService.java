@@ -1,6 +1,6 @@
 package techzo.com.example.cambiazo.donations.domain.services;
 
-import techzo.com.example.cambiazo.donations.domain.model.aggregates.CategoryOng;
+import techzo.com.example.cambiazo.donations.domain.model.entities.CategoryOng;
 import techzo.com.example.cambiazo.donations.domain.model.commands.CreateCategoryOngCommand;
 
 import java.util.Optional;
