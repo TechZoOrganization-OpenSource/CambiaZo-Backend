@@ -7,4 +7,6 @@ import java.util.Optional;
 
 public interface OngCommandService {
     Optional<Ong>handle(CreateOngCommand command);
+
+    boolean handleDeleteOng(Long id);
 }

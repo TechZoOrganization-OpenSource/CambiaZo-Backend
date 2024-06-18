@@ -44,5 +44,16 @@ public class OngCommandServiceImpl implements OngCommandService{
         ongRepository.save(ong);
         return Optional.of(ong);
     }
+
+    @Override
+    public boolean handleDeleteOng(Long id) {
+        Optional<Ong> ong = ongRepository.findById(id);
+        if (ong.isPresent()) {
+            ongRepository.delete(ong.get());
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
 
