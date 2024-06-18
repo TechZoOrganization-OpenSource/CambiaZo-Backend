@@ -6,7 +6,6 @@ import techzo.com.example.cambiazo.donations.domain.model.entities.CategoryOng;
 import java.util.List;
 
 public interface CategoryOngRepository extends JpaRepository<CategoryOng, Long>{
-    List<CategoryOng>findAll();
-
     boolean existsByName(String name);
+    boolean existsById(Long Id);
 }

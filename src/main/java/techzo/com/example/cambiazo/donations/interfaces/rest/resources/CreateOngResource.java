@@ -1,6 +1,6 @@
-package techzo.com.example.cambiazo.donations.domain.model.commands;
+package techzo.com.example.cambiazo.donations.interfaces.rest.resources;
 
-public record CreateOngCommand(
+public record CreateOngResource(
         String name,
         String type,
         String aboutUs,
@@ -11,6 +11,5 @@ public record CreateOngCommand(
         String phone,
         String logo,
         String website,
-        Long categoryOngId
-) {
+        Long categoryOngId) {
 }
