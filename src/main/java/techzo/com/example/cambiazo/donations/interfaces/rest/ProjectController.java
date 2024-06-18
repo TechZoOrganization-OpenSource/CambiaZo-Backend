@@ -1,6 +1,8 @@
 package techzo.com.example.cambiazo.donations.interfaces.rest;
 
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import techzo.com.example.cambiazo.donations.domain.model.aggregates.Project;
@@ -20,6 +22,7 @@ import static org.springframework.http.HttpStatus.CREATED;
 
 @RestController
 @RequestMapping("/api/v1/projects")
+@Tag(name="Projects", description="Projects Management Endpoints")
 public class ProjectController {
     private final ProjectCommandService projectCommandService;
 
@@ -30,12 +33,14 @@ public class ProjectController {
         this.projectQueryService=projectQueryService;
     }
 
+    @Operation(summary="Create a new Project", description="Create a new Project with the input data.")
     @PostMapping
     public ResponseEntity<ProjectResource> createProject(@RequestBody CreateProjectResource resource){
         Optional<Project> project= projectCommandService.handle(CreateProjectCommandFromResourceAssembler.toCommandFromResource(resource));
         return project.map(source ->new ResponseEntity<>(ProjectResourceFromEntityAssembler.toResourceFromEntity(source),CREATED)).orElseGet(()->ResponseEntity.notFound().build());
     }
 
+    @Operation(summary="Get all Projects", description="Get all Projects.")
     @GetMapping
     public ResponseEntity<List<ProjectResource>> getAllProjects(){
         var getAllProjectsQuery=new GetAllProjectsQuery();
@@ -44,6 +49,7 @@ public class ProjectController {
         return ResponseEntity.ok(projectResource);
     }
 
+    @Operation(summary="Get Project by ID", description="Get Project by ID.")
     @GetMapping("/{id}")
     public ResponseEntity<ProjectResource> getProjectById(@PathVariable Long id){
         Optional<Project>project=projectQueryService.handle(new GetProjectByIdQuery(id));

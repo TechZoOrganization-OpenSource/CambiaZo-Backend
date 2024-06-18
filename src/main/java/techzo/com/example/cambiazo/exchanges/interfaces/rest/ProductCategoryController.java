@@ -1,5 +1,7 @@
 package techzo.com.example.cambiazo.exchanges.interfaces.rest;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import techzo.com.example.cambiazo.exchanges.domain.model.aggregates.ProductCategory;
@@ -19,6 +21,7 @@ import static org.springframework.http.HttpStatus.CREATED;
 
 @RestController
 @RequestMapping("/api/v1/product-category")
+@Tag(name = "Product Category", description = "Product Category Management Endpoints")
 public class ProductCategoryController {
     private final ProductCategoryCommandService productCategoryCommandService;
 
@@ -29,12 +32,14 @@ public class ProductCategoryController {
         this.productCategoryQueryService = productCategoryQueryService;
     }
 
+    @Operation(summary = "Create a new Product Category", description = "Create a new Product Category with the input data.")
     @PostMapping
     public ResponseEntity<ProductCategoryResource> createProductCategory(@RequestBody CreateProductCategoryResource resource) {
         Optional<ProductCategory> productCategory = productCategoryCommandService.handle(CreateProductCategoryCommandFromResourceAssembler.toCommandFromResource(resource));
         return productCategory.map(source -> new ResponseEntity<>(ProductCategoryResourceFromEntityAssembler.toResourceFromEntity(source), CREATED)).orElseGet(() -> ResponseEntity.badRequest().build());
     }
 
+    @Operation(summary = "Get all Product Categories", description = "Get all Product Categories.")
     @GetMapping
     public ResponseEntity<List<ProductCategoryResource>> getAllProductCategory() {
         var getAllProductCategoryQuery = new GetAllProductCategoryQuery();
@@ -43,6 +48,7 @@ public class ProductCategoryController {
         return ResponseEntity.ok(productCategoryResource);
     }
 
+    @Operation(summary = "Get Product Category by ID", description = "Get Product Category by ID.")
     @GetMapping("/{id}")
     public ResponseEntity<ProductCategoryResource> getProductCategoryById(@PathVariable Long id) {
         Optional<ProductCategory> productCategory = productCategoryQueryService.handle(new GetProductCategoryByIdQuery(id));
