@@ -28,6 +28,10 @@ public class CategoryOng{
     public CategoryOng() {
     }
 
+    public CategoryOng(CreateCategoryOngCommand command) {
+        this.name = command.name();
+    }
+
     public Long getCategoryId(){
         return id;
     }

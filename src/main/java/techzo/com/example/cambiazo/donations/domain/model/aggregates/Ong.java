@@ -10,9 +10,6 @@ import techzo.com.example.cambiazo.shared.domain.model.aggregates.AuditableAbstr
 @Entity
 public class Ong extends AuditableAbstractAggregateRoot<Ong> {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
     @Column(nullable = false)
     @NotNull(message = "Name is mandatory")
