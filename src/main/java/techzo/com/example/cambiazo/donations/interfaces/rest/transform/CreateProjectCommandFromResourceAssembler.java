@@ -6,6 +6,6 @@ import techzo.com.example.cambiazo.donations.interfaces.rest.resources.CreatePro
 
 public class CreateProjectCommandFromResourceAssembler {
     public static CreateProjectCommand toCommandFromResource(CreateProjectResource resource) {
-        return new CreateProjectCommand(resource.name(), resource.description());
+        return new CreateProjectCommand(resource.name(), resource.description(), resource.ongId());
     }
 }
