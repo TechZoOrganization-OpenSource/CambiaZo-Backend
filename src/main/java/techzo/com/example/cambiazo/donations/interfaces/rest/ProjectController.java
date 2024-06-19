@@ -52,6 +52,57 @@ public class ProjectController {
         }
     }
 
-   
+    @Operation(summary="Get all Projects", description="Get all Projects.")
+    @GetMapping
+    public ResponseEntity<List<ProjectResource>> getAllProjects(){
+        try {
+            var getAllProjectsQuery=new GetAllProjectsQuery();
+            var project = projectQueryService.handle(getAllProjectsQuery);
+            var projectResource=project.stream().map(ProjectResourceFromEntityAssembler::toResourceFromEntity).toList();
+            return ResponseEntity.ok(projectResource);
+        }catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @Operation(summary="Get Project by ID", description="Get Project by ID.")
+    @GetMapping("/{id}")
+    public ResponseEntity<ProjectResource> getProjectById(@PathVariable Long id){
+        try {
+            var getProjectByIdQuery=new GetProjectByIdQuery(id);
+            var project=projectQueryService.handle(getProjectByIdQuery);
+            var projectResource=ProjectResourceFromEntityAssembler.toResourceFromEntity(project.get());
+            return ResponseEntity.ok(projectResource);
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResponseEntity.status(INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @Operation(summary="Get Projects by Ong ID", description="Get Projects by Ong ID.")
+    @GetMapping("/ongs/{ongId}")
+    public ResponseEntity<List<ProjectResource>> getProjectsByOngId(@PathVariable Long ongId){
+        try {
+            var getProjectsByOngIdQuery=new GetProjectsByOngIdQuery(ongId);
+            var projects=projectQueryService.handle(getProjectsByOngIdQuery);
+            var projectResources=projects.stream().map(ProjectResourceFromEntityAssembler::toResourceFromEntity).collect(Collectors.toList());
+            return ResponseEntity.ok(projectResources);
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResponseEntity.status(INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Void> deleteProject(@PathVariable Long id){
+        try {
+            projectCommandService.handleDeleteProject(id);
+            return ResponseEntity.noContent().build();
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResponseEntity.status(INTERNAL_SERVER_ERROR).build();
+        }
+    }
 
 }
