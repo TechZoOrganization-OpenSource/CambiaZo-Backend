@@ -5,7 +5,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import org.springframework.data.domain.AbstractAggregateRoot;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import techzo.com.example.cambiazo.donations.domain.model.aggregates.CategoryOng;
 import techzo.com.example.cambiazo.exchanges.domain.model.commands.CreateProductCategoryCommand;
 
 @Entity
