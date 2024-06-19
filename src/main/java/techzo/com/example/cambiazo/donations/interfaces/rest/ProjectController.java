@@ -5,7 +5,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import techzo.com.example.cambiazo.donations.domain.model.aggregates.Project;
 import techzo.com.example.cambiazo.donations.domain.model.queries.GetAllProjectsQuery;
 import techzo.com.example.cambiazo.donations.domain.model.queries.GetProjectByIdQuery;
 import techzo.com.example.cambiazo.donations.domain.model.queries.GetProjectsByOngIdQuery;
@@ -30,6 +29,8 @@ public class ProjectController {
     private final ProjectCommandService projectCommandService;
 
     private final ProjectQueryService projectQueryService;
+
+    //red social en ingles es social network o
 
     public ProjectController(ProjectCommandService projectCommandService, ProjectQueryService projectQueryService){
         this.projectCommandService=projectCommandService;
