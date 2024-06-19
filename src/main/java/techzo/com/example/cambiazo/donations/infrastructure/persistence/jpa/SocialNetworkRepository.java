@@ -2,8 +2,10 @@ package techzo.com.example.cambiazo.donations.infrastructure.persistence.jpa;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+import techzo.com.example.cambiazo.donations.domain.model.aggregates.Ong;
 import techzo.com.example.cambiazo.donations.domain.model.aggregates.SocialNetwork;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -12,4 +14,5 @@ public interface SocialNetworkRepository extends JpaRepository<SocialNetwork, Lo
     Optional<SocialNetwork>findByNameAndUrl(String name, String url);
 
 
+    List<SocialNetwork> findByOngId(Ong id);
 }
