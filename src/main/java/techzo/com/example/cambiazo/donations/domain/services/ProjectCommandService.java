@@ -8,4 +8,5 @@ import java.util.Optional;
 
 public interface ProjectCommandService {
     Optional<Project> handle(CreateProjectCommand command);
+    boolean handleDeleteProject(Long id);
 }

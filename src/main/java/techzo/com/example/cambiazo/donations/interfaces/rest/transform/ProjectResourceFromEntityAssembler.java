@@ -6,6 +6,6 @@ import techzo.com.example.cambiazo.donations.interfaces.rest.resources.ProjectRe
 
 public class ProjectResourceFromEntityAssembler {
     public static ProjectResource toResourceFromEntity(Project entity) {
-        return new ProjectResource(entity.getId(), entity.getName(), entity.getDescription());
+        return new ProjectResource(entity.getId(), entity.getName(), entity.getDescription(), entity.getOngId());
     }
 }
