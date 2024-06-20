@@ -1,6 +1,7 @@
 package techzo.com.example.cambiazo.donations.domain.model.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.domain.AbstractAggregateRoot;
@@ -18,6 +19,7 @@ public class CategoryOng{
     private Long id;
 
     @Column(nullable = false)
+    @NotNull(message = "Name is required")
     private String name;
 
 
