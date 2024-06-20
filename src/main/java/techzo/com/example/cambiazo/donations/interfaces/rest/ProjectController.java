@@ -95,6 +95,7 @@ public class ProjectController {
         }
     }
 
+    @Operation(summary="Delete Project by ID", description="Delete Project by ID.")
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteProject(@PathVariable Long id){
         try {
