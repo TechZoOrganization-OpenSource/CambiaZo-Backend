@@ -93,6 +93,8 @@ public class SocialNetworkController {
         }
     }
 
+
+    @Operation(summary="Delete a Social Network by Id", description="Delete a Social Network by Id.")
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteSocialNetwork(@PathVariable Long id){
         try {
