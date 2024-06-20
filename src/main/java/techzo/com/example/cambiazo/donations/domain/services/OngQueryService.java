@@ -5,6 +5,7 @@ package techzo.com.example.cambiazo.donations.domain.services;
 import techzo.com.example.cambiazo.donations.domain.model.aggregates.Ong;
 import techzo.com.example.cambiazo.donations.domain.model.queries.GetAllOngsQuery;
 import techzo.com.example.cambiazo.donations.domain.model.queries.GetOngByIdQuery;
+import techzo.com.example.cambiazo.donations.domain.model.queries.GetOngByLettersQuery;
 import techzo.com.example.cambiazo.donations.domain.model.queries.GetOngsByCategoryOngIdQuery;
 
 import java.util.List;
@@ -15,6 +16,8 @@ public interface OngQueryService {
     List<Ong> handle(GetAllOngsQuery query);
 
     List<Ong>handle(GetOngsByCategoryOngIdQuery query);
+
+    List<Ong>handle(GetOngByLettersQuery query);
 
 
 }

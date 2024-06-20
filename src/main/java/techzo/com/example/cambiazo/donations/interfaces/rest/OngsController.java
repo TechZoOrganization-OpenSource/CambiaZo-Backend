@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import techzo.com.example.cambiazo.donations.domain.model.queries.GetAllOngsQuery;
 import techzo.com.example.cambiazo.donations.domain.model.queries.GetOngByIdQuery;
+import techzo.com.example.cambiazo.donations.domain.model.queries.GetOngByLettersQuery;
 import techzo.com.example.cambiazo.donations.domain.model.queries.GetOngsByCategoryOngIdQuery;
 import techzo.com.example.cambiazo.donations.domain.services.OngCommandService;
 import techzo.com.example.cambiazo.donations.domain.services.OngQueryService;
@@ -88,6 +89,19 @@ public class OngsController {
         try{
             var getOngsByCategoryQuery = new GetOngsByCategoryOngIdQuery(categoryId);
             var ongs = ongQueryService.handle(getOngsByCategoryQuery);
+            var ongResources = ongs.stream().map(OngResourceFromEntityAssembler::toResourceFromEntity).collect(Collectors.toList());
+            return ResponseEntity.ok(ongResources); //200
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build(); //500
+        }
+    }
+
+    @GetMapping("/search/{letters}")
+    public ResponseEntity<List<OngResource>> getOngsByLetters(@PathVariable String letters){
+        try{
+            var getOngByLettersQuery = new GetOngByLettersQuery(letters);
+            var ongs = ongQueryService.handle(getOngByLettersQuery);
             var ongResources = ongs.stream().map(OngResourceFromEntityAssembler::toResourceFromEntity).collect(Collectors.toList());
             return ResponseEntity.ok(ongResources); //200
         }catch (Exception e){

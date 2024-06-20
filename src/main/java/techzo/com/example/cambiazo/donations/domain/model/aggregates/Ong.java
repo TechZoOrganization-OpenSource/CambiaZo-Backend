@@ -21,17 +21,17 @@ public class Ong extends AuditableAbstractAggregateRoot<Ong> {
     @Getter
     private String type;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "TEXT")
     @NotNull(message = "AboutUs is mandatory")
     @Getter
     private String aboutUs;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "TEXT")
     @NotNull(message = "Mission And Vision is mandatory")
     @Getter
     private String missionAndVision;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "TEXT")
     @NotNull(message = "supportForm is mandatory")
     @Getter
     private String supportForm;

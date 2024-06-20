@@ -12,6 +12,8 @@ import java.util.Optional;
 public interface OngRepository extends JpaRepository<Ong, Long>{
     Optional<Ong>findByName(String name);
     Optional<Ong>findByEmail(String email);
-
     List<Ong>findByCategoryOngId(CategoryOng id);
+
+    List<Ong>findByNameContaining(String name);
+
 }
