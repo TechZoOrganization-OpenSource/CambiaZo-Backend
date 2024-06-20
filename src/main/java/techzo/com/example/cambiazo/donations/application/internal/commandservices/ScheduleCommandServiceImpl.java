@@ -5,6 +5,7 @@ import techzo.com.example.cambiazo.donations.domain.exceptions.OngNotFoundExcept
 import techzo.com.example.cambiazo.donations.domain.model.aggregates.Ong;
 import techzo.com.example.cambiazo.donations.domain.model.aggregates.Schedule;
 import techzo.com.example.cambiazo.donations.domain.model.commands.CreateScheduleCommand;
+import techzo.com.example.cambiazo.donations.domain.model.valueobjects.ScheduleText;
 import techzo.com.example.cambiazo.donations.domain.services.ScheduleCommandService;
 import techzo.com.example.cambiazo.donations.infrastructure.persistence.jpa.OngRepository;
 import techzo.com.example.cambiazo.donations.infrastructure.persistence.jpa.ScheduleRepository;
@@ -27,11 +28,6 @@ public class ScheduleCommandServiceImpl implements ScheduleCommandService{
     public Optional<Schedule> handle(CreateScheduleCommand command) {
         Ong ong = ongRepository.findById(command.ongId())
                 .orElseThrow(() -> new OngNotFoundException(command.ongId()));
-
-        var text = command.text();
-        scheduleRepository.findByText(text).ifPresent(schedule -> {
-            throw new IllegalArgumentException("Schedule with text already exists");
-        });
 
         var schedule = new Schedule(command, ong);
         scheduleRepository.save(schedule);
