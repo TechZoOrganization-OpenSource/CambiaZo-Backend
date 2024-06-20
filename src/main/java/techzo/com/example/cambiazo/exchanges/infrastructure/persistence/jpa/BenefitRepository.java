@@ -10,5 +10,4 @@ import java.util.Optional;
 public interface BenefitRepository extends JpaRepository<Benefit, Long>{
 
     List<Benefit>findAllBenefitsByMembershipId(Membership id);
-
 }
