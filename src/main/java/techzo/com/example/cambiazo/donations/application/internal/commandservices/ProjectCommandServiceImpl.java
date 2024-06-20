@@ -6,6 +6,7 @@ import techzo.com.example.cambiazo.donations.domain.exceptions.OngNotFoundExcept
 import techzo.com.example.cambiazo.donations.domain.model.aggregates.Ong;
 import techzo.com.example.cambiazo.donations.domain.model.aggregates.Project;
 import techzo.com.example.cambiazo.donations.domain.model.commands.CreateProjectCommand;
+import techzo.com.example.cambiazo.donations.domain.model.valueobjects.ProjectName;
 import techzo.com.example.cambiazo.donations.domain.services.ProjectCommandService;
 import techzo.com.example.cambiazo.donations.infrastructure.persistence.jpa.OngRepository;
 import techzo.com.example.cambiazo.donations.infrastructure.persistence.jpa.ProjectRepository;
@@ -28,10 +29,6 @@ public class ProjectCommandServiceImpl implements ProjectCommandService{
         Ong ong = ongRepository.findById(command.ongId())
                 .orElseThrow(() -> new OngNotFoundException(command.ongId()));
 
-        var name = command.name();
-        projectRepository.findByName(name).ifPresent(project ->{
-            throw new IllegalArgumentException("Project with name already exists");
-        });
         var project = new Project(command, ong);
         projectRepository.save(project);
         return Optional.of(project);

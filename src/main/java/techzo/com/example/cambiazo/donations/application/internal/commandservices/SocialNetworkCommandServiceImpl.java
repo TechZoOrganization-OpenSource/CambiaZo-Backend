@@ -5,6 +5,8 @@ import techzo.com.example.cambiazo.donations.domain.exceptions.OngNotFoundExcept
 import techzo.com.example.cambiazo.donations.domain.model.aggregates.Ong;
 import techzo.com.example.cambiazo.donations.domain.model.aggregates.SocialNetwork;
 import techzo.com.example.cambiazo.donations.domain.model.commands.CreateSocialNetworkCommand;
+import techzo.com.example.cambiazo.donations.domain.model.valueobjects.SocialNetworkName;
+import techzo.com.example.cambiazo.donations.domain.model.valueobjects.SocialNetworkUrl;
 import techzo.com.example.cambiazo.donations.domain.services.SocialNetworkCommandService;
 import techzo.com.example.cambiazo.donations.infrastructure.persistence.jpa.OngRepository;
 import techzo.com.example.cambiazo.donations.infrastructure.persistence.jpa.SocialNetworkRepository;
@@ -28,8 +30,8 @@ public class SocialNetworkCommandServiceImpl implements SocialNetworkCommandServ
         Ong ong = ongRepository.findById(command.ongId())
                 .orElseThrow(() -> new OngNotFoundException(command.ongId()));
 
-        var name = command.name();
-        var url = command.url();
+        var name = new SocialNetworkName(command.name());
+        var url = new SocialNetworkUrl(command.url());
         socialNetworkRepository.findByNameAndUrl(name,url).ifPresent(socialNetwork ->{
             throw new IllegalArgumentException("Social Network with name and url already exists");
         });

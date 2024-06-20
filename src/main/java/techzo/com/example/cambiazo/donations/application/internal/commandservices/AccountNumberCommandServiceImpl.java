@@ -5,6 +5,9 @@ import techzo.com.example.cambiazo.donations.domain.exceptions.OngNotFoundExcept
 import techzo.com.example.cambiazo.donations.domain.model.aggregates.AccountNumber;
 import techzo.com.example.cambiazo.donations.domain.model.aggregates.Ong;
 import techzo.com.example.cambiazo.donations.domain.model.commands.CreateAccountNumberCommand;
+import techzo.com.example.cambiazo.donations.domain.model.valueobjects.AccountNumberAccount;
+import techzo.com.example.cambiazo.donations.domain.model.valueobjects.AccountNumberCci;
+import techzo.com.example.cambiazo.donations.domain.model.valueobjects.AccountNumberName;
 import techzo.com.example.cambiazo.donations.domain.services.AccountNumberCommandService;
 import techzo.com.example.cambiazo.donations.infrastructure.persistence.jpa.AccountNumberRepository;
 import techzo.com.example.cambiazo.donations.infrastructure.persistence.jpa.OngRepository;
@@ -28,9 +31,9 @@ public class AccountNumberCommandServiceImpl implements AccountNumberCommandServ
         Ong ong = ongRepository.findById(command.ongId())
                 .orElseThrow(() -> new OngNotFoundException(command.ongId()));
 
-        var name = command.name();
-        var cci = command.cci();
-        var account = command.account();
+        var name = new AccountNumberName(command.name());
+        var cci = new AccountNumberCci(command.cci());
+        var account = new AccountNumberAccount(command.account());
         accountNumberRepository.findByNameAndCciAndAccount(name, cci, account).ifPresent( accountNumber ->{
             throw new IllegalArgumentException("Account Number with name, cci and account already exists");
         });
