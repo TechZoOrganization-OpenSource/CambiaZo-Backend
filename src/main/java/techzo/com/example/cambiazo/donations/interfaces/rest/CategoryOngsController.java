@@ -57,6 +57,8 @@ public class CategoryOngsController {
         return categoryOng.map(source->ResponseEntity.ok(CategoryOngResourceFromEntityAssembler.toResourceFromEntity(source))).orElseGet(()->ResponseEntity.notFound().build());
     }
 
+
+    @Operation(summary="Delete a CategoryOng", description="Delete a CategoryOng with the input id.")
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteCategoryOngById(@PathVariable Long id){
         try {

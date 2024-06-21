@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 
 @RestController
 @RequestMapping("/api/v1/product-category")
@@ -53,5 +54,19 @@ public class ProductCategoryController {
     public ResponseEntity<ProductCategoryResource> getProductCategoryById(@PathVariable Long id) {
         Optional<ProductCategory> productCategory = productCategoryQueryService.handle(new GetProductCategoryByIdQuery(id));
         return productCategory.map(source -> ResponseEntity.ok(ProductCategoryResourceFromEntityAssembler.toResourceFromEntity(source))).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @Operation(summary = "Delete Product Category by ID", description = "Delete Product Category by ID.")
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Boolean> deleteProductCategory(@PathVariable Long id) {
+        try {
+            productCategoryCommandService.handleDeleteProductCategory(id);
+            return ResponseEntity.noContent().build();
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().build();
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResponseEntity.status(INTERNAL_SERVER_ERROR).build();
+        }
     }
 }

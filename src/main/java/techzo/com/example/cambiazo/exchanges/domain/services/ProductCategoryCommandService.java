@@ -7,4 +7,6 @@ import java.util.Optional;
 
 public interface ProductCategoryCommandService {
     Optional<ProductCategory> handle(CreateProductCategoryCommand command);
+
+    boolean handleDeleteProductCategory(Long id);
 }
