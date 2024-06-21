@@ -2,19 +2,12 @@ package techzo.com.example.cambiazo.exchanges.domain.model.aggregates;
 
 import jakarta.persistence.*;
 import lombok.Getter;
-import org.springframework.data.domain.AbstractAggregateRoot;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import techzo.com.example.cambiazo.exchanges.domain.model.commands.CreateUserCommand;
+import techzo.com.example.cambiazo.shared.domain.model.aggregates.AuditableAbstractAggregateRoot;
 
 
 @Entity
-@EntityListeners(AuditingEntityListener.class)
-public class User extends AbstractAggregateRoot<User> {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Getter
-    private Long id;
+public class User extends AuditableAbstractAggregateRoot<User> {
 
     @Column(nullable = false)
     @Getter
