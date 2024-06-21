@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import techzo.com.example.cambiazo.exchanges.domain.model.aggregates.User;
+import techzo.com.example.cambiazo.exchanges.domain.model.queries.GetAllUsersByMembershipIdQuery;
 import techzo.com.example.cambiazo.exchanges.domain.model.queries.GetAllUsersQuery;
 import techzo.com.example.cambiazo.exchanges.domain.model.queries.GetUserByIdQuery;
 import techzo.com.example.cambiazo.exchanges.domain.services.UserCommandService;
@@ -16,6 +17,7 @@ import techzo.com.example.cambiazo.exchanges.interfaces.rest.transform.UserResou
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static org.springframework.http.HttpStatus.CREATED;
 
@@ -48,6 +50,21 @@ public class UsersController {
         var userResource=user.stream().map(UserResourceFromEntityAssembler::toResourceFromEntity).toList();
         return ResponseEntity.ok(userResource);
     }
+
+    @Operation(summary = "Get all Users by Membership ID", description = "Get all Users by Membership ID.")
+    @GetMapping("/membership/{id}")
+    public ResponseEntity<List<UserResource>>getAllUsersByMembership(@PathVariable Long id){
+        try{
+            var getAllUsersByMembershipIdQuery=new GetAllUsersByMembershipIdQuery(id);
+            var user = userQueryService.handle(getAllUsersByMembershipIdQuery);
+            var userResource=user.stream().map(UserResourceFromEntityAssembler::toResourceFromEntity).collect(Collectors.toList());
+            return ResponseEntity.ok(userResource);
+        }catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+
+    }
+
 
     @Operation(summary = "Get User by ID", description = "Get User by ID.")
     @GetMapping("/{id}")
