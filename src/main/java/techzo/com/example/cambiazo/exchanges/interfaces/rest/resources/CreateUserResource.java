@@ -1,6 +1,6 @@
 package techzo.com.example.cambiazo.exchanges.interfaces.rest.resources;
 
-public record CreateUserResource(String name, String email, String phone, String password, String profilePicture) {
+public record CreateUserResource(String name, String email, String phone, String password, String profilePicture, Long membershipId) {
     public CreateUserResource {
         //the same but only null validation
         if (name == null) {
@@ -17,6 +17,9 @@ public record CreateUserResource(String name, String email, String phone, String
         }
         if (profilePicture == null) {
             throw new IllegalArgumentException("profilePicture cannot be null");
+        }
+        if (membershipId == null) {
+            throw new IllegalArgumentException("membershipId cannot be null");
         }
     }
 }
