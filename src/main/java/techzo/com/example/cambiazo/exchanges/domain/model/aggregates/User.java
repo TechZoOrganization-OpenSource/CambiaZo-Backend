@@ -7,23 +7,30 @@ import techzo.com.example.cambiazo.exchanges.domain.model.commands.CreateUserCom
 import techzo.com.example.cambiazo.exchanges.domain.model.entities.Membership;
 import techzo.com.example.cambiazo.shared.domain.model.aggregates.AuditableAbstractAggregateRoot;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Entity
 public class User extends AuditableAbstractAggregateRoot<User> {
 
     @Column(nullable = false)
+    @NotNull(message = "Name is required")
     @Getter
     private String name;
 
     @Column(nullable = false)
+    @NotNull(message = "Email is required")
     @Getter
     private String email;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 9)
+    @NotNull(message = "Phone is required")
     @Getter
     private String phone;
 
     @Column(nullable = false)
+    @NotNull(message = "Password is required")
     @Getter
     private String password;
 
