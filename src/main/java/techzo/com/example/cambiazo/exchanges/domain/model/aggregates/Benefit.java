@@ -3,11 +3,13 @@ package techzo.com.example.cambiazo.exchanges.domain.model.aggregates;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
+import lombok.Setter;
 import techzo.com.example.cambiazo.exchanges.domain.model.commands.CreateBenefitCommand;
 import techzo.com.example.cambiazo.exchanges.domain.model.entities.Membership;
 import techzo.com.example.cambiazo.exchanges.domain.model.valueobjects.BenefitDescription;
 
-
+@Setter
+@Getter
 @Entity
 public class Benefit {
 
