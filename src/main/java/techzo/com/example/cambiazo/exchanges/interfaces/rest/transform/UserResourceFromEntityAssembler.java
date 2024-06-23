@@ -5,6 +5,6 @@ import techzo.com.example.cambiazo.exchanges.interfaces.rest.resources.UserResou
 
 public class UserResourceFromEntityAssembler {
     public static UserResource toResourceFromEntity(User entity) {
-        return new UserResource(entity.getId(), entity.getName(), entity.getEmail(), entity.getPhone(), entity.getPassword(), entity.getProfilePicture());
+        return new UserResource(entity.getId(), entity.getName(), entity.getEmail(), entity.getPhone(), entity.getPassword(), entity.getProfilePicture(), entity.getMembershipId());
     }
 }

@@ -7,4 +7,6 @@ import java.util.Optional;
 
 public interface UserCommandService {
     Optional<User> handle(CreateUserCommand command);
+
+    boolean handleDeleteUser(Long id);
 }

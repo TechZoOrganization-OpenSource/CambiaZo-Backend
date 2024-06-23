@@ -5,6 +5,6 @@ import techzo.com.example.cambiazo.exchanges.interfaces.rest.resources.CreateUse
 
 public class CreateUserCommandFromResourceAssembler {
     public static CreateUserCommand toCommandFromResource(CreateUserResource resource) {
-        return new CreateUserCommand(resource.name(), resource.email(), resource.phone(), resource.password(), resource.profilePicture());
+        return new CreateUserCommand(resource.name(), resource.email(), resource.phone(), resource.password(), resource.profilePicture(), resource.membershipId());
     }
 }
