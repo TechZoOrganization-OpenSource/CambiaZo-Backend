@@ -1,6 +1,6 @@
 package techzo.com.example.cambiazo.exchanges.domain.model.commands;
 
-public record CreateUserCommand(String name, String email, String phone, String password, String profilePicture) {
+public record CreateUserCommand(String name, String email, String phone, String password, String profilePicture, Long membershipId) {
     public CreateUserCommand{
         if (name == null || name.isBlank()) {
             throw new IllegalArgumentException("name cannot be null or empty");
@@ -16,6 +16,9 @@ public record CreateUserCommand(String name, String email, String phone, String 
         }
         if (profilePicture == null || profilePicture.isBlank()) {
             throw new IllegalArgumentException("profilePicture cannot be null or empty");
+        }
+        if (membershipId == null) {
+            throw new IllegalArgumentException("membershipId cannot be null");
         }
     }
 }

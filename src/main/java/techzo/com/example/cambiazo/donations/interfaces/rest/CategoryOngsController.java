@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 
 @RestController
 @RequestMapping("/api/v1/category-ongs")
@@ -54,5 +55,18 @@ public class CategoryOngsController {
     public ResponseEntity<CategoryOngResource> getCategoryOngById(@PathVariable Long id){
         Optional<CategoryOng>categoryOng=categoryOngQueryService.handle(new GetCategoryOngByIdQuery(id));
         return categoryOng.map(source->ResponseEntity.ok(CategoryOngResourceFromEntityAssembler.toResourceFromEntity(source))).orElseGet(()->ResponseEntity.notFound().build());
+    }
+
+
+    @Operation(summary="Delete a CategoryOng", description="Delete a CategoryOng with the input id.")
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Void> deleteCategoryOngById(@PathVariable Long id){
+        try {
+            categoryOngCommandService.handleDeleteCategoryOng(id);
+            return ResponseEntity.noContent().build();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(INTERNAL_SERVER_ERROR).build();
+        }
     }
 }

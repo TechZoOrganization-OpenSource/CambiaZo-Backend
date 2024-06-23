@@ -7,4 +7,5 @@ import java.util.Optional;
 
 public interface CategoryOngCommandService {
     Optional<CategoryOng> handle(CreateCategoryOngCommand command);
+    boolean handleDeleteCategoryOng(Long id);
 }

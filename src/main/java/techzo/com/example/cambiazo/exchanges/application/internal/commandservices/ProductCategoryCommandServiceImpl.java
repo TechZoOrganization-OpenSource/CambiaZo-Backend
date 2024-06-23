@@ -26,4 +26,15 @@ public class ProductCategoryCommandServiceImpl implements ProductCategoryCommand
         var createdProductCategory = productCategoryRepository.save(productCategory);
         return Optional.of(createdProductCategory);
     }
+
+    @Override
+    public boolean handleDeleteProductCategory(Long id) {
+        Optional<ProductCategory> productCategory = productCategoryRepository.findById(id);
+        if (productCategory.isPresent()) {
+            productCategoryRepository.delete(productCategory.get());
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

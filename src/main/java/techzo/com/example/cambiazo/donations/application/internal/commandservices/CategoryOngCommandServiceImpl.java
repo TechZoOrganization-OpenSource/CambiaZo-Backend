@@ -25,4 +25,15 @@ public class CategoryOngCommandServiceImpl implements CategoryOngCommandService 
         var createdCategoryOng = categoryOngRepository.save(categoryOng);
         return Optional.of(createdCategoryOng);
     }
+
+    @Override
+    public boolean handleDeleteCategoryOng(Long id) {
+        Optional<CategoryOng> categoryOng = categoryOngRepository.findById(id);
+        if (categoryOng.isPresent()) {
+            categoryOngRepository.delete(categoryOng.get());
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
