@@ -21,7 +21,7 @@ import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 
 @RestController
-@RequestMapping("/favorite-products")
+@RequestMapping("/api/v1/favorite-products")
 @Tag(name="Favorite Products", description="Favorite Products Management Endpoints")
 public class FavoriteProductController {
 

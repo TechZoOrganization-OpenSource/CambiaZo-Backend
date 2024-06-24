@@ -49,10 +49,6 @@ public class OngCommandServiceImpl implements OngCommandService{
 
     @Override
     public Optional<Ong>handle(UpdateOngCommand command){
-        //verificar si hay un ong o no
-        if(ongRepository.existsByNameAndEmail(command.name(), command.email())){
-            throw new IllegalArgumentException("Ong with name and already exists");
-        }
         var result = ongRepository.findById(command.id());
         if(result.isEmpty()){
             throw new IllegalArgumentException("Ong does not exist");

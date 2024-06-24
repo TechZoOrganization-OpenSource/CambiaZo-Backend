@@ -21,7 +21,7 @@ import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 
 @RestController
-@RequestMapping("/departments")
+@RequestMapping("/api/v1/departments")
 @Tag(name="Departments", description="Departments Management Endpoints")
 public class DepartmentController {
 

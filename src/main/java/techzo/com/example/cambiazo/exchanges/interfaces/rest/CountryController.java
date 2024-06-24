@@ -20,7 +20,7 @@ import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 
 @RestController
-@RequestMapping("/countries")
+@RequestMapping("/api/v1/countries")
 @Tag(name="Countries", description="Countries Management Endpoints")
 public class CountryController {
 

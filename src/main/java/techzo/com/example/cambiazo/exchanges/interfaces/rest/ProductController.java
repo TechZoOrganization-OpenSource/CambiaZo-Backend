@@ -21,7 +21,7 @@ import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 
 @RestController
-@RequestMapping("/products")
+@RequestMapping("/api/v1/products")
 @Tag(name="Products", description="Products Management Endpoints")
 public class ProductController {
 

@@ -16,6 +16,4 @@ public interface OngRepository extends JpaRepository<Ong, Long>{
 
     List<Ong>findByNameContaining(String name);
 
-    boolean existsByNameAndEmail(String name, String email);
-
 }

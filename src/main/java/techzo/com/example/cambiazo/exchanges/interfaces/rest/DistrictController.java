@@ -22,7 +22,7 @@ import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 
 @RestController
-@RequestMapping("/districts")
+@RequestMapping("/api/v1/districts")
 @Tag(name="Districts", description="Districts Management Endpoints")
 public class DistrictController {
     private final DistrictCommandService districtCommandService;
