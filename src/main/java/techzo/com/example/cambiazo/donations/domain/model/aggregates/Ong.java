@@ -61,6 +61,12 @@ public class Ong extends AuditableAbstractAggregateRoot<Ong> {
     @Getter
     private String website;
 
+    @Column(nullable = false)
+    @NotNull(message = "Schedule is mandatory")
+    @Getter
+    private String schedule;
+
+
     @ManyToOne
     @JoinColumn(name = "category_ong_id")
     @NotNull(message = "CategoryOngId is mandatory")
@@ -78,11 +84,12 @@ public class Ong extends AuditableAbstractAggregateRoot<Ong> {
         this.phone = command.phone();
         this.logo = command.logo();
         this.website = command.website();
+        this.schedule = command.schedule();
     }
 
     public Ong(){}
 
-    public Ong updateInformation(String name, String type, String aboutUs, String missionAndVision, String supportForm, String address, String email, String phone, String logo, String website, CategoryOng categoryOngId) {
+    public Ong updateInformation(String name, String type, String aboutUs, String missionAndVision, String supportForm, String address, String email, String phone, String logo, String website, CategoryOng categoryOngId, String schedule) {
         this.name = name;
         this.type = type;
         this.aboutUs = aboutUs;
@@ -94,6 +101,7 @@ public class Ong extends AuditableAbstractAggregateRoot<Ong> {
         this.logo = logo;
         this.website = website;
         this.categoryOngId = categoryOngId;
+        this.schedule = schedule;
         return this;
     }
 

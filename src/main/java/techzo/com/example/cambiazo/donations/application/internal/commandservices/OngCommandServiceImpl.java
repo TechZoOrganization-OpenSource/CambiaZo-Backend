@@ -64,7 +64,7 @@ public class OngCommandServiceImpl implements OngCommandService{
             CategoryOng categoryOng = categoryOngRepository.findById(command.categoryOngId())
                     .orElseThrow(() -> new CategoryOngNotFoundException(command.categoryOngId()));
             var updatedOng = ongRepository.save(ongToUpdate.updateInformation(command.name(), command.type(), command.aboutUs(), command.missionAndVision(),
-                    command.supportForm(), command.address(), command.email(), command.phone(), command.logo(), command.website(), categoryOng));
+                    command.supportForm(), command.address(), command.email(), command.phone(), command.logo(), command.website(), categoryOng, command.schedule()));
             return Optional.of(updatedOng);
         }catch (Exception e){
             throw new IllegalArgumentException("Error while updating ong: " + e.getMessage());
