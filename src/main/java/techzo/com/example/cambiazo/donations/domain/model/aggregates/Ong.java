@@ -7,9 +7,14 @@ import techzo.com.example.cambiazo.donations.domain.model.commands.CreateOngComm
 import techzo.com.example.cambiazo.donations.domain.model.entities.CategoryOng;
 import techzo.com.example.cambiazo.shared.domain.model.aggregates.AuditableAbstractAggregateRoot;
 
+/**
+ * Represents an NGO (Non-Governmental Organization) entity.
+ *
+ * @author CambiaZo - TechZo
+ * @version 1.0
+ */
 @Entity
 public class Ong extends AuditableAbstractAggregateRoot<Ong> {
-
 
     @Column(nullable = false)
     @NotNull(message = "Name is mandatory")
@@ -66,7 +71,6 @@ public class Ong extends AuditableAbstractAggregateRoot<Ong> {
     @Getter
     private String schedule;
 
-
     @ManyToOne
     @JoinColumn(name = "category_ong_id")
     @NotNull(message = "CategoryOngId is mandatory")
@@ -89,6 +93,23 @@ public class Ong extends AuditableAbstractAggregateRoot<Ong> {
 
     public Ong(){}
 
+    /**
+     * Updates the information of the NGO.
+     *
+     * @param name The name of the NGO.
+     * @param type The type of the NGO.
+     * @param aboutUs A description about the NGO.
+     * @param missionAndVision The mission and vision of the NGO.
+     * @param supportForm The support form of the NGO.
+     * @param address The address of the NGO.
+     * @param email The email contact of the NGO.
+     * @param phone The phone contact of the NGO.
+     * @param logo The logo of the NGO.
+     * @param website The website URL of the NGO.
+     * @param categoryOngId The category of the NGO.
+     * @param schedule The schedule of the NGO.
+     * @return The updated instance of Ong.
+     */
     public Ong updateInformation(String name, String type, String aboutUs, String missionAndVision, String supportForm, String address, String email, String phone, String logo, String website, CategoryOng categoryOngId, String schedule) {
         this.name = name;
         this.type = type;
@@ -105,6 +126,11 @@ public class Ong extends AuditableAbstractAggregateRoot<Ong> {
         return this;
     }
 
+    /**
+     * Get the ID of the category of the NGO.
+     *
+     * @return The ID of the category.
+     */
     public Long getCategoryOngId() {
         return categoryOngId.getId();
     }

@@ -10,6 +10,14 @@ import techzo.com.example.cambiazo.shared.domain.model.aggregates.AuditableAbstr
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Represents a User in the exchange system.
+ *
+ * @author CambiaZo - TechZo
+ * @version 1.0
+ *
+ */
+
 
 @Entity
 public class User extends AuditableAbstractAggregateRoot<User> {

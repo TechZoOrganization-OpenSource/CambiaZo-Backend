@@ -8,6 +8,15 @@ import techzo.com.example.cambiazo.exchanges.domain.model.commands.CreateExchang
 import techzo.com.example.cambiazo.exchanges.domain.model.valueobjects.ExchangeStatus;
 import techzo.com.example.cambiazo.shared.domain.model.aggregates.AuditableAbstractAggregateRoot;
 
+
+/**
+ * Represents Exchange in the Cambiazo system.
+ *
+ * @author CambiaZo - TechZo
+ * @version 1.0
+ *
+ */
+
 @Setter
 @Getter
 @Entity
