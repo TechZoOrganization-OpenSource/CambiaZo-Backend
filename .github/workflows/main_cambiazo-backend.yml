@@ -16,8 +16,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up Java version
-        uses: actions/setup-java@v3
+      - name: Setup Java JDK
+        uses: actions/setup-java@v4.2.1
         with:
           java-version: '21'
           distribution: 'temurin'  # Puedes cambiar a adopt, zulu, etc.
