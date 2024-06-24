@@ -11,8 +11,10 @@ import techzo.com.example.cambiazo.donations.domain.services.CategoryOngCommandS
 import techzo.com.example.cambiazo.donations.domain.services.CategoryOngQueryService;
 import techzo.com.example.cambiazo.donations.interfaces.rest.resources.CategoryOngResource;
 import techzo.com.example.cambiazo.donations.interfaces.rest.resources.CreateCategoryOngResource;
+import techzo.com.example.cambiazo.donations.interfaces.rest.resources.UpdateCategoryOngResource;
 import techzo.com.example.cambiazo.donations.interfaces.rest.transform.CategoryOngResourceFromEntityAssembler;
 import techzo.com.example.cambiazo.donations.interfaces.rest.transform.CreateCategoryOngCommandFromResourceAssembler;
+import techzo.com.example.cambiazo.donations.interfaces.rest.transform.UpdateCategoryOngCommandFromResourceAssembler;
 
 import java.util.List;
 import java.util.Optional;
@@ -55,6 +57,18 @@ public class CategoryOngsController {
     public ResponseEntity<CategoryOngResource> getCategoryOngById(@PathVariable Long id){
         Optional<CategoryOng>categoryOng=categoryOngQueryService.handle(new GetCategoryOngByIdQuery(id));
         return categoryOng.map(source->ResponseEntity.ok(CategoryOngResourceFromEntityAssembler.toResourceFromEntity(source))).orElseGet(()->ResponseEntity.notFound().build());
+    }
+
+    @Operation(summary="Update a CategoryOng", description="Update a CategoryOng with the input data.")
+    @PutMapping("/edit/{id}")
+    public ResponseEntity<CategoryOngResource> updateCategoryOng(@PathVariable Long id, @RequestBody UpdateCategoryOngResource updateCategoryOngResource){
+        var updateCategoryOngCommand= UpdateCategoryOngCommandFromResourceAssembler.toCommandFromResource(id,updateCategoryOngResource);
+        var updateCategoryOng=categoryOngCommandService.handle(updateCategoryOngCommand);
+        if(updateCategoryOng.isEmpty()){
+            return ResponseEntity.notFound().build();
+        }
+        var categoryOngResource=CategoryOngResourceFromEntityAssembler.toResourceFromEntity(updateCategoryOng.get());
+        return ResponseEntity.ok(categoryOngResource);
     }
 
 

@@ -34,6 +34,11 @@ public class CategoryOng{
         this.name = command.name();
     }
 
+    public CategoryOng updateInformation(String name) {
+        this.name = name;
+        return this;
+    }
+
     public Long getCategoryId(){
         return id;
     }

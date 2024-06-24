@@ -8,4 +8,6 @@ import java.util.List;
 public interface CategoryOngRepository extends JpaRepository<CategoryOng, Long>{
     boolean existsByName(String name);
     boolean existsById(Long Id);
+
+    boolean existsByNameAndIdIsNot(String name, Long id);
 }

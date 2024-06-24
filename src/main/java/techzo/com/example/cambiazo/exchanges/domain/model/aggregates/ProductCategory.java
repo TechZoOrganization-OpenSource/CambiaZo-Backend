@@ -24,4 +24,9 @@ public class ProductCategory extends AbstractAggregateRoot<ProductCategory> {
     public ProductCategory(CreateProductCategoryCommand command) {
         this.name = command.name();
     }
+
+    public ProductCategory updateInformation(String name) {
+        this.name = name;
+        return this;
+    }
 }

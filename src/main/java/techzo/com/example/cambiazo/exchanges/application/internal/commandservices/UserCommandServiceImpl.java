@@ -4,6 +4,8 @@ import org.springframework.stereotype.Service;
 import techzo.com.example.cambiazo.exchanges.domain.exceptions.MembershipNotFoundException;
 import techzo.com.example.cambiazo.exchanges.domain.model.aggregates.User;
 import techzo.com.example.cambiazo.exchanges.domain.model.commands.CreateUserCommand;
+import techzo.com.example.cambiazo.exchanges.domain.model.commands.UpdateProductCommand;
+import techzo.com.example.cambiazo.exchanges.domain.model.commands.UpdateUserCommand;
 import techzo.com.example.cambiazo.exchanges.domain.model.entities.Membership;
 import techzo.com.example.cambiazo.exchanges.domain.services.UserCommandService;
 import techzo.com.example.cambiazo.exchanges.infrastructure.persistence.jpa.MembershipRepository;
@@ -34,6 +36,28 @@ public class UserCommandServiceImpl implements UserCommandService {
         var user = new User(command, membership);
         var createdUser = userRepository.save(user);
         return Optional.of(createdUser);
+    }
+
+    @Override
+    public Optional<User> handle(UpdateUserCommand command) {
+        if(userRepository.existsByEmail(command.email())) {
+            throw new IllegalArgumentException("User with same email already exists");
+        }
+        var result = userRepository.findById(command.id());
+        if (result.isEmpty()) {
+            throw new IllegalArgumentException("User does not exist");
+        }
+
+        var userToUpdate = result.get();
+        try {
+            Membership membership = membershipRepository.findById(command.membershipId())
+                    .orElseThrow(() -> new MembershipNotFoundException(command.membershipId()));
+            var updatedUser = userRepository.save(userToUpdate.updateInformation(command.name(), command.email(), command.phone(), command.password(), command.profilePicture(), membership));
+            return Optional.of(updatedUser);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Error while updating user: " + e.getMessage());
+
+        }
     }
 
 

@@ -11,8 +11,10 @@ import techzo.com.example.cambiazo.exchanges.domain.model.queries.GetUserByIdQue
 import techzo.com.example.cambiazo.exchanges.domain.services.UserCommandService;
 import techzo.com.example.cambiazo.exchanges.domain.services.UserQueryService;
 import techzo.com.example.cambiazo.exchanges.interfaces.rest.resources.CreateUserResource;
+import techzo.com.example.cambiazo.exchanges.interfaces.rest.resources.UpdateUserResource;
 import techzo.com.example.cambiazo.exchanges.interfaces.rest.resources.UserResource;
 import techzo.com.example.cambiazo.exchanges.interfaces.rest.transform.CreateUserCommandFromResourceAssembler;
+import techzo.com.example.cambiazo.exchanges.interfaces.rest.transform.UpdateUserCommandFromResourceAssembler;
 import techzo.com.example.cambiazo.exchanges.interfaces.rest.transform.UserResourceFromEntityAssembler;
 
 import java.util.List;
@@ -72,6 +74,21 @@ public class UsersController {
         Optional<User>user=userQueryService.handle(new GetUserByIdQuery(id));
         return user.map(source->ResponseEntity.ok(UserResourceFromEntityAssembler.toResourceFromEntity(source))).orElseGet(()->ResponseEntity.notFound().build());
     }
+
+
+    @Operation(summary = "Update User by ID", description = "Update User by ID.")
+    @PutMapping("/edit/{userId}")
+    public ResponseEntity<UserResource> updateUser(@PathVariable Long userId, @RequestBody UpdateUserResource resource) {
+        var updateUserCommand = UpdateUserCommandFromResourceAssembler.toCommandFromResource(userId, resource);
+        var user = userCommandService.handle(updateUserCommand);
+        if (user.isEmpty()){
+            return ResponseEntity.notFound().build();
+        }
+        var userResource = UserResourceFromEntityAssembler.toResourceFromEntity(user.get());
+        return ResponseEntity.ok(userResource);
+    }
+
+
 
     @Operation(summary = "Delete User by ID", description = "Delete User by ID.")
     @DeleteMapping("/delete/{id}")

@@ -11,8 +11,10 @@ import techzo.com.example.cambiazo.exchanges.domain.services.ProductCategoryComm
 import techzo.com.example.cambiazo.exchanges.domain.services.ProductCategoryQueryService;
 import techzo.com.example.cambiazo.exchanges.interfaces.rest.resources.CreateProductCategoryResource;
 import techzo.com.example.cambiazo.exchanges.interfaces.rest.resources.ProductCategoryResource;
+import techzo.com.example.cambiazo.exchanges.interfaces.rest.resources.UpdateProductCategoryResource;
 import techzo.com.example.cambiazo.exchanges.interfaces.rest.transform.CreateProductCategoryCommandFromResourceAssembler;
 import techzo.com.example.cambiazo.exchanges.interfaces.rest.transform.ProductCategoryResourceFromEntityAssembler;
+import techzo.com.example.cambiazo.exchanges.interfaces.rest.transform.UpdateProductCategoryCommandFromResourceAssembler;
 
 import java.util.List;
 import java.util.Optional;
@@ -55,6 +57,20 @@ public class ProductCategoryController {
         Optional<ProductCategory> productCategory = productCategoryQueryService.handle(new GetProductCategoryByIdQuery(id));
         return productCategory.map(source -> ResponseEntity.ok(ProductCategoryResourceFromEntityAssembler.toResourceFromEntity(source))).orElseGet(() -> ResponseEntity.notFound().build());
     }
+
+    @Operation(summary = "Edit Product Category", description = "Edit Product Category.")
+    @PutMapping("/edit/{productCategoryId}")
+    public ResponseEntity<ProductCategoryResource>updateProductCategory(@PathVariable Long productCategoryId, @RequestBody UpdateProductCategoryResource resource){
+
+        var updateProductCategoryCommand = UpdateProductCategoryCommandFromResourceAssembler.toCommandFromResource(productCategoryId, resource);
+        var updateProductCategory = productCategoryCommandService.handle(updateProductCategoryCommand);
+        if(updateProductCategory.isEmpty()){
+            return ResponseEntity.badRequest().build();
+        }
+        var productCategoryResource = ProductCategoryResourceFromEntityAssembler.toResourceFromEntity(updateProductCategory.get());
+        return ResponseEntity.ok(productCategoryResource);
+    }
+
 
     @Operation(summary = "Delete Product Category by ID", description = "Delete Product Category by ID.")
     @DeleteMapping("/delete/{id}")

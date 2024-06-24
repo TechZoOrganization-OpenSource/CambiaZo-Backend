@@ -82,6 +82,21 @@ public class Ong extends AuditableAbstractAggregateRoot<Ong> {
 
     public Ong(){}
 
+    public Ong updateInformation(String name, String type, String aboutUs, String missionAndVision, String supportForm, String address, String email, String phone, String logo, String website, CategoryOng categoryOngId) {
+        this.name = name;
+        this.type = type;
+        this.aboutUs = aboutUs;
+        this.missionAndVision = missionAndVision;
+        this.supportForm = supportForm;
+        this.address = address;
+        this.email = email;
+        this.phone = phone;
+        this.logo = logo;
+        this.website = website;
+        this.categoryOngId = categoryOngId;
+        return this;
+    }
+
     public Long getCategoryOngId() {
         return categoryOngId.getId();
     }
