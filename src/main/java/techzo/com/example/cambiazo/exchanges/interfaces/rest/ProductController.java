@@ -10,10 +10,8 @@ import techzo.com.example.cambiazo.exchanges.domain.services.ProductCommandServi
 import techzo.com.example.cambiazo.exchanges.domain.services.ProductQueryService;
 import techzo.com.example.cambiazo.exchanges.interfaces.rest.resources.CreateProductResource;
 import techzo.com.example.cambiazo.exchanges.interfaces.rest.resources.ProductResource;
-import techzo.com.example.cambiazo.exchanges.interfaces.rest.transform.BenefitResourceFromEntityAssembler;
-import techzo.com.example.cambiazo.exchanges.interfaces.rest.transform.CreateProductCommandFromResourceAssembler;
-import techzo.com.example.cambiazo.exchanges.interfaces.rest.transform.DistrictResourceFromEntityAssembler;
-import techzo.com.example.cambiazo.exchanges.interfaces.rest.transform.ProductResourceFromEntityAssembler;
+import techzo.com.example.cambiazo.exchanges.interfaces.rest.resources.UpdateProductResource;
+import techzo.com.example.cambiazo.exchanges.interfaces.rest.transform.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -134,6 +132,20 @@ public class ProductController {
             return ResponseEntity.status(INTERNAL_SERVER_ERROR).build();
         }
     }
+
+
+    @Operation(summary="Edit a Product", description="Edit a Product by its id.")
+    @PutMapping("/edit/{productId}")
+    public ResponseEntity<ProductResource> updateProduct(@PathVariable Long productId, @RequestBody UpdateProductResource resource){
+        var updateProductCommand= UpdateProductCommandFromResourceAssembler.toCommandFromResource(productId, resource);
+        var product=productCommandService.handle(updateProductCommand);
+        if(product.isEmpty()){
+            return ResponseEntity.badRequest().build();
+        }
+        var productResource= ProductResourceFromEntityAssembler.toResourceFromEntity(product.get());
+        return ResponseEntity.ok(productResource);
+    }
+
 
     @Operation(summary="Delete a Product", description="Delete a Product by its id.")
     @DeleteMapping("/delete/{id}")

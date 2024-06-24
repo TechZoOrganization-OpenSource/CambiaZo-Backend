@@ -54,6 +54,16 @@ public class User extends AuditableAbstractAggregateRoot<User> {
         this.membershipId = membership;
     }
 
+    public User updateInformation(String name, String email, String phone, String password, String profilePicture, Membership membershipId) {
+        this.name = name;
+        this.email = email;
+        this.phone = phone;
+        this.password = password;
+        this.profilePicture = profilePicture;
+        this.membershipId = membershipId;
+        return this;
+    }
+
     public Long getMembershipId() {
         return membershipId.getId();
     }
