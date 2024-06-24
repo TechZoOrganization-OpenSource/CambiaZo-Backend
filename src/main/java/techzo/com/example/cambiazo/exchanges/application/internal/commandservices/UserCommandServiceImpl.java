@@ -40,9 +40,6 @@ public class UserCommandServiceImpl implements UserCommandService {
 
     @Override
     public Optional<User> handle(UpdateUserCommand command) {
-        if(userRepository.existsByEmail(command.email())) {
-            throw new IllegalArgumentException("User with same email already exists");
-        }
         var result = userRepository.findById(command.id());
         if (result.isEmpty()) {
             throw new IllegalArgumentException("User does not exist");
