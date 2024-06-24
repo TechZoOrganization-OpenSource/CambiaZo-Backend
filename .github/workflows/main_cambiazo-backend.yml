@@ -20,6 +20,7 @@ jobs:
         uses: actions/setup-java@v3
         with:
           java-version: '21'
+          distribution: 'temurin'  # Puedes cambiar a adopt, zulu, etc.
 
       - name: Build with Maven
         run: mvn clean install
@@ -59,4 +60,3 @@ jobs:
           app-name: 'cambiazo-backend'
           slot-name: 'Production'
           package: '*.jar'
-          
