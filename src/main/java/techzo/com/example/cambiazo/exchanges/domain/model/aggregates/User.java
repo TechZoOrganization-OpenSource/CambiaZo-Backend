@@ -10,6 +10,14 @@ import techzo.com.example.cambiazo.shared.domain.model.aggregates.AuditableAbstr
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Represents a User in the exchange system.
+ *
+ * @author CambiaZo - TechZo
+ * @version 1.0
+ *
+ */
+
 
 @Entity
 public class User extends AuditableAbstractAggregateRoot<User> {
@@ -52,6 +60,16 @@ public class User extends AuditableAbstractAggregateRoot<User> {
         this.password = command.password();
         this.profilePicture = command.profilePicture();
         this.membershipId = membership;
+    }
+
+    public User updateInformation(String name, String email, String phone, String password, String profilePicture, Membership membershipId) {
+        this.name = name;
+        this.email = email;
+        this.phone = phone;
+        this.password = password;
+        this.profilePicture = profilePicture;
+        this.membershipId = membershipId;
+        return this;
     }
 
     public Long getMembershipId() {

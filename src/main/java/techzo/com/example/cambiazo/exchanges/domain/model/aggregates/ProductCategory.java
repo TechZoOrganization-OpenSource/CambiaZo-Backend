@@ -7,6 +7,14 @@ import org.springframework.data.domain.AbstractAggregateRoot;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import techzo.com.example.cambiazo.exchanges.domain.model.commands.CreateProductCategoryCommand;
 
+/**
+ * Represents a Product Category in the exchange system.
+ *
+ * @author CambiaZo - TechZo
+ * @version 1.0
+ *
+ */
+
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 public class ProductCategory extends AbstractAggregateRoot<ProductCategory> {
@@ -23,5 +31,10 @@ public class ProductCategory extends AbstractAggregateRoot<ProductCategory> {
 
     public ProductCategory(CreateProductCategoryCommand command) {
         this.name = command.name();
+    }
+
+    public ProductCategory updateInformation(String name) {
+        this.name = name;
+        return this;
     }
 }

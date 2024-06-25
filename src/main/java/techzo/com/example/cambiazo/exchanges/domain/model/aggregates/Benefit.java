@@ -8,6 +8,17 @@ import techzo.com.example.cambiazo.exchanges.domain.model.commands.CreateBenefit
 import techzo.com.example.cambiazo.exchanges.domain.model.entities.Membership;
 import techzo.com.example.cambiazo.exchanges.domain.model.valueobjects.BenefitDescription;
 
+
+
+/**
+ * Represents a Benefit of the membership.
+ *
+ * @author CambiaZo - TechZo
+ * @version 1.0
+ *
+ */
+
+
 @Setter
 @Getter
 @Entity

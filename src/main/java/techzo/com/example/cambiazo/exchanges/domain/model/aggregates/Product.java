@@ -10,6 +10,15 @@ import lombok.Setter;
 import techzo.com.example.cambiazo.exchanges.domain.model.commands.CreateProductCommand;
 import techzo.com.example.cambiazo.shared.domain.model.aggregates.AuditableAbstractAggregateRoot;
 
+
+/**
+ * Represents a Product in the exchange system.
+ *
+ * @author CambiaZo - TechZo
+ * @version 1.0
+ *
+ */
+
 @Setter
 @Getter
 @Entity
@@ -81,6 +90,19 @@ public class Product extends AuditableAbstractAggregateRoot<Product>{
         this.districtId = district;
     }
 
+    public Product updateInformation(String name, String description, String desiredObject, Double price, String image, Boolean boost, Boolean available, ProductCategory productCategory, User user, District district) {
+        this.name = name;
+        this.description = description;
+        this.desiredObject = desiredObject;
+        this.price = price;
+        this.image = image;
+        this.boost = boost;
+        this.available = available;
+        this.productCategoryId = productCategory;
+        this.userId = user;
+        this.districtId = district;
+        return this;
+    }
 
     public Long getProductCategoryId() {
         return productCategoryId.getId();

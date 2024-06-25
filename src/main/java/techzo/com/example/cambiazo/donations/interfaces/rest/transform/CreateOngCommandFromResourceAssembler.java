@@ -16,6 +16,8 @@ public class CreateOngCommandFromResourceAssembler {
                 resource.phone(),
                 resource.logo(),
                 resource.website(),
-                resource.categoryOngId());
+                resource.schedule(),
+                resource.categoryOngId()
+        );
     }
 }

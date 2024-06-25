@@ -11,6 +11,7 @@ public record CreateOngCommand(
         String phone,
         String logo,
         String website,
+        String schedule,
         Long categoryOngId
 ) {
 }

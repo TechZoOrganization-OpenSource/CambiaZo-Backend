@@ -10,6 +10,14 @@ import techzo.com.example.cambiazo.exchanges.domain.model.valueobjects.Departmen
 import techzo.com.example.cambiazo.shared.domain.model.aggregates.AuditableAbstractAggregateRoot;
 
 
+/**
+ * Represents a Department
+ *
+ * @author CambiaZo - TechZo
+ * @version 1.0
+ *
+ */
+
 @Setter
 @Getter
 @Entity
