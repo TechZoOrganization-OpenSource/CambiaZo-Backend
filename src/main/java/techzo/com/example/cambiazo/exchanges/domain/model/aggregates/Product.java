@@ -116,5 +116,8 @@ public class Product extends AuditableAbstractAggregateRoot<Product>{
         return districtId.getId();
     }
 
+    public void setAvailable(boolean available) {
+        this.available = available;
+    }
 
 }
