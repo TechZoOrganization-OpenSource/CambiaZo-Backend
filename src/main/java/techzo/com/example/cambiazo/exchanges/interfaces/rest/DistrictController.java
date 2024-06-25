@@ -122,6 +122,28 @@ public class DistrictController {
         }
     }
 
+
+    /**
+     * Endpoint for retrieving a District by its name.
+     *
+     * @param name The name of the District to retrieve.
+     * @return ResponseEntity containing the retrieved DistrictResource.
+     */
+
+    @Operation(summary="Get a District by Name", description="Get a District by its name.")
+    @GetMapping("/name/{name}")
+    public ResponseEntity<DistrictResource> getDistrictByName(@PathVariable String name){
+        try {
+            var getDistrictByNameQuery = new GetDistrictByNameQuery(name);
+            var district = districtQueryService.handle(getDistrictByNameQuery);
+            var districtResource = DistrictResourceFromEntityAssembler.toResourceFromEntity(district.get());
+            return ResponseEntity.ok(districtResource);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
     /**
      * Endpoint for deleting a District by its ID.
      *
