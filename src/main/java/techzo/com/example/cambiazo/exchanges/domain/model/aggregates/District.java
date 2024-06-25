@@ -8,6 +8,15 @@ import lombok.Setter;
 import techzo.com.example.cambiazo.exchanges.domain.model.commands.CreateDistrictCommand;
 import techzo.com.example.cambiazo.exchanges.domain.model.valueobjects.DistrictName;
 
+/**
+ * Represents a District
+ *
+ * @author CambiaZo - TechZo
+ * @version 1.0
+ *
+ */
+
+
 @Setter
 @Getter
 @Entity

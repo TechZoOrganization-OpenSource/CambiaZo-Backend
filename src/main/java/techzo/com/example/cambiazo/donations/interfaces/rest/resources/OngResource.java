@@ -12,5 +12,7 @@ public record OngResource(
         String phone,
         String logo,
         String website,
-        Long categoryOngId) {
+        Long categoryOngId,
+        String schedule
+) {
 }

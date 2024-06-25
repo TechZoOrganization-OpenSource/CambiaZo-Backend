@@ -8,6 +8,15 @@ import techzo.com.example.cambiazo.exchanges.domain.model.commands.CreateReviewC
 import techzo.com.example.cambiazo.exchanges.domain.model.valueobjects.ReviewScore;
 import techzo.com.example.cambiazo.shared.domain.model.aggregates.AuditableAbstractAggregateRoot;
 
+/**
+ * Represents a Review in the exchange system.
+ *
+ * @author CambiaZo - TechZo
+ * @version 1.0
+ *
+ */
+
+
 @Setter
 @Getter
 @Entity

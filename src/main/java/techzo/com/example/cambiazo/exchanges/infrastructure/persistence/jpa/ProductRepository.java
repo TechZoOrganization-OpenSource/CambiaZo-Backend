@@ -15,4 +15,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     List<Product> findAllByUserId(User user);
 
     List<Product> findAllProductsByName(String name);
+
+    boolean existsByNameAndId(String name, Long id);
 }

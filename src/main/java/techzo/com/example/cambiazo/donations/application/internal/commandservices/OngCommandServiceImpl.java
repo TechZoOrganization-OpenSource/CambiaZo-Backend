@@ -1,10 +1,12 @@
 package techzo.com.example.cambiazo.donations.application.internal.commandservices;
 
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import techzo.com.example.cambiazo.donations.domain.exceptions.CategoryOngNotFoundException;
 import techzo.com.example.cambiazo.donations.domain.model.aggregates.Ong;
 import techzo.com.example.cambiazo.donations.domain.model.commands.CreateOngCommand;
+import techzo.com.example.cambiazo.donations.domain.model.commands.UpdateOngCommand;
 import techzo.com.example.cambiazo.donations.domain.model.entities.CategoryOng;
 import techzo.com.example.cambiazo.donations.domain.services.OngCommandService;
 import techzo.com.example.cambiazo.donations.infrastructure.persistence.jpa.CategoryOngRepository;
@@ -44,6 +46,27 @@ public class OngCommandServiceImpl implements OngCommandService{
         ongRepository.save(ong);
         return Optional.of(ong);
     }
+
+    @Override
+    public Optional<Ong>handle(UpdateOngCommand command){
+        var result = ongRepository.findById(command.id());
+        if(result.isEmpty()){
+            throw new IllegalArgumentException("Ong does not exist");
+        }
+        var ongToUpdate = result.get();
+
+        //String name, String type, String aboutUs, String missionAndVision, String supportForm, String address, String email, String phone, String logo, String website, CategoryOng categoryOngId
+        try{
+            CategoryOng categoryOng = categoryOngRepository.findById(command.categoryOngId())
+                    .orElseThrow(() -> new CategoryOngNotFoundException(command.categoryOngId()));
+            var updatedOng = ongRepository.save(ongToUpdate.updateInformation(command.name(), command.type(), command.aboutUs(), command.missionAndVision(),
+                    command.supportForm(), command.address(), command.email(), command.phone(), command.logo(), command.website(), categoryOng, command.schedule()));
+            return Optional.of(updatedOng);
+        }catch (Exception e){
+            throw new IllegalArgumentException("Error while updating ong: " + e.getMessage());
+        }
+    }
+
 
     @Override
     public boolean handleDeleteOng(Long id) {

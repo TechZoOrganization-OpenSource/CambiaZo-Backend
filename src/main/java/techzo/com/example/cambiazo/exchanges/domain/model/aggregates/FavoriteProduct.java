@@ -4,6 +4,15 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 
+/**
+ * Represents a Favorite Product in the Cambiazo system.
+ *
+ * @author CambiaZo - TechZo
+ * @version 1.0
+ *
+ */
+
+
 @Entity
 public class FavoriteProduct {
 

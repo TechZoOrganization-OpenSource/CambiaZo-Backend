@@ -4,8 +4,12 @@ import org.springframework.stereotype.Service;
 import techzo.com.example.cambiazo.exchanges.domain.exceptions.DistrictNotFoundException;
 import techzo.com.example.cambiazo.exchanges.domain.exceptions.ProductCategoryNotFoundException;
 import techzo.com.example.cambiazo.exchanges.domain.exceptions.UserNotFoundException;
+import techzo.com.example.cambiazo.exchanges.domain.model.aggregates.District;
 import techzo.com.example.cambiazo.exchanges.domain.model.aggregates.Product;
+import techzo.com.example.cambiazo.exchanges.domain.model.aggregates.ProductCategory;
+import techzo.com.example.cambiazo.exchanges.domain.model.aggregates.User;
 import techzo.com.example.cambiazo.exchanges.domain.model.commands.CreateProductCommand;
+import techzo.com.example.cambiazo.exchanges.domain.model.commands.UpdateProductCommand;
 import techzo.com.example.cambiazo.exchanges.domain.services.ProductCommandService;
 import techzo.com.example.cambiazo.exchanges.infrastructure.persistence.jpa.DistrictRepository;
 import techzo.com.example.cambiazo.exchanges.infrastructure.persistence.jpa.ProductCategoryRepository;
@@ -48,6 +52,35 @@ public class ProductCommandServiceImpl implements ProductCommandService {
         productRepository.save(product);
         return Optional.of(product);
 
+    }
+
+    @Override
+    public Optional<Product> handle(UpdateProductCommand command) {
+        if(productRepository.existsByNameAndId(command.name(), command.id())) {
+            throw new IllegalArgumentException("Product with same name already exists");
+        }
+        var result = productRepository.findById(command.id());
+
+        if (result.isEmpty()) {
+            throw new IllegalArgumentException("Product does not exist");
+        }
+
+        var productToUpdate = result.get();
+        try{
+            ProductCategory productCategory = productCategoryRepository.findById(command.productCategoryId())
+                    .orElseThrow(() -> new ProductCategoryNotFoundException(command.productCategoryId()));
+
+            User user = userRepository.findById(command.userId())
+                    .orElseThrow(() -> new UserNotFoundException(command.userId()));
+
+            District district = districtRepository.findById(command.districtId())
+                    .orElseThrow(() -> new DistrictNotFoundException(command.districtId()));
+
+            var updatedProduct = productRepository.save(productToUpdate.updateInformation(command.name(), command.description(), command.desiredObject(), command.price(), command.image(), command.boost(), command.available(), productCategory, user, district));
+            return Optional.of(updatedProduct);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Error while updating product: " + e.getMessage());
+        }
     }
 
     @Override
