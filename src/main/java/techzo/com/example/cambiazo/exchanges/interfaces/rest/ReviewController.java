@@ -8,6 +8,7 @@ import techzo.com.example.cambiazo.exchanges.domain.model.aggregates.Review;
 import techzo.com.example.cambiazo.exchanges.domain.model.commands.CreateReviewCommand;
 import techzo.com.example.cambiazo.exchanges.domain.model.queries.GetAllReviewsByUserReceptorIdQuery;
 import techzo.com.example.cambiazo.exchanges.domain.model.queries.GetAllReviewsQuery;
+import techzo.com.example.cambiazo.exchanges.domain.model.queries.GetReviewByAuthorIdAndExchangeId;
 import techzo.com.example.cambiazo.exchanges.domain.services.ReviewCommandService;
 import techzo.com.example.cambiazo.exchanges.domain.services.ReviewQueryService;
 import techzo.com.example.cambiazo.exchanges.interfaces.rest.resources.CreateReviewResource;
@@ -108,6 +109,31 @@ public class ReviewController {
             return ResponseEntity.status(INTERNAL_SERVER_ERROR).build();
         }
     }
+
+    /**
+     * Retrieves a Review by Author ID and Exchange ID.
+     *
+     * @param authorId the author ID
+     * @param exchangeId the exchange ID
+     * @return the review resource wrapped in a ResponseEntity
+     */
+    @Operation(summary = "Get Review by Author ID and Exchange ID", description = "Get Review by author ID and exchange ID.")
+    @GetMapping("/author/{authorId}/exchange/{exchangeId}")
+    public ResponseEntity<ReviewResource> getReviewByAuthorIdAndExchangeId(@PathVariable Long authorId, @PathVariable Long exchangeId) {
+        try {
+            var query = new GetReviewByAuthorIdAndExchangeId(authorId, exchangeId);
+            var review = reviewQueryService.handle(query);
+            if (review.isEmpty()) {
+                return ResponseEntity.notFound().build();
+            }
+            var reviewResource = ReviewResourceFromEntityAssembler.toResourceFromEntity(review.get());
+            return ResponseEntity.ok(reviewResource);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(INTERNAL_SERVER_ERROR).build();
+        }
+    }
+    
 
     /**
      * Deletes a Review with the input data.
