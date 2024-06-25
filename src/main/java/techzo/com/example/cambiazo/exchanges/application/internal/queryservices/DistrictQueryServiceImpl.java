@@ -7,6 +7,8 @@ import techzo.com.example.cambiazo.exchanges.domain.model.aggregates.District;
 import techzo.com.example.cambiazo.exchanges.domain.model.queries.GetAllDistrictsByDepartmentIdQuery;
 import techzo.com.example.cambiazo.exchanges.domain.model.queries.GetAllDistrictsQuery;
 import techzo.com.example.cambiazo.exchanges.domain.model.queries.GetDistrictByIdQuery;
+import techzo.com.example.cambiazo.exchanges.domain.model.queries.GetDistrictByNameQuery;
+import techzo.com.example.cambiazo.exchanges.domain.model.valueobjects.DistrictName;
 import techzo.com.example.cambiazo.exchanges.domain.services.DistrictQueryService;
 import techzo.com.example.cambiazo.exchanges.infrastructure.persistence.jpa.DepartmentRepository;
 import techzo.com.example.cambiazo.exchanges.infrastructure.persistence.jpa.DistrictRepository;
@@ -39,7 +41,16 @@ public class DistrictQueryServiceImpl implements DistrictQueryService {
     }
 
     @Override
+    public Optional<District>handle(GetDistrictByNameQuery query) {
+        DistrictName name = new DistrictName(query.name());
+        return districtRepository.findByName(name);
+    }
+
+
+    @Override
     public Optional<District>handle(GetDistrictByIdQuery query){
+
+
         return districtRepository.findById(query.id());
     }
 }
