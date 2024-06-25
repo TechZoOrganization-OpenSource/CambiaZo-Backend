@@ -9,8 +9,11 @@ import techzo.com.example.cambiazo.exchanges.domain.services.ExchangeCommandServ
 import techzo.com.example.cambiazo.exchanges.domain.services.ExchangeQueryService;
 import techzo.com.example.cambiazo.exchanges.interfaces.rest.resources.CreateExchangeResource;
 import techzo.com.example.cambiazo.exchanges.interfaces.rest.resources.ExchangeResource;
+import techzo.com.example.cambiazo.exchanges.interfaces.rest.resources.UpdateExchangeStatusResource;
 import techzo.com.example.cambiazo.exchanges.interfaces.rest.transform.CreateExchangeCommandFromResourceAssembler;
 import techzo.com.example.cambiazo.exchanges.interfaces.rest.transform.ExchangeResourceFromEntityAssembler;
+import techzo.com.example.cambiazo.exchanges.interfaces.rest.transform.UpdateExchangeStatusFromResourceAssembler;
+import techzo.com.example.cambiazo.exchanges.interfaces.rest.transform.UpdateUserMembershipFromResourceAssembler;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -182,6 +185,18 @@ public class ExchangeController {
             e.printStackTrace();
             return ResponseEntity.status(INTERNAL_SERVER_ERROR).build();
         }
+    }
+
+    @Operation(summary="Update Exchange Status", description="Update Exchange Status with the input data.")
+    @PutMapping("/status/{id}")
+    public ResponseEntity<ExchangeResource> updateExchangeStatus(@PathVariable Long id, @RequestBody UpdateExchangeStatusResource resource){
+        var updateExchangeStatusCommand = UpdateExchangeStatusFromResourceAssembler.toCommandFromResource(id, resource);
+        var exchange = exchangeCommandService.handle(updateExchangeStatusCommand);
+        if(exchange.isEmpty()){
+            return ResponseEntity.notFound().build();
+        }
+        var exchangeResource = ExchangeResourceFromEntityAssembler.toResourceFromEntity(exchange.get());
+        return ResponseEntity.ok(exchangeResource);
     }
 
 }
