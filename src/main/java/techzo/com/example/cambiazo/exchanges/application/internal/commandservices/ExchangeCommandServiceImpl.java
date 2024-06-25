@@ -54,7 +54,16 @@ public class ExchangeCommandServiceImpl implements ExchangeCommandService {
                     .orElseThrow(() -> new ProductNotFoundException(exchange.getProductChangeId()));
 
             var updatedExchange = exchangeRepository.save(exchangeToUpdate.updateInformation(productOwn, productChange, command.status()));
+
+            if("Aceptado".equals(command.status())){
+                productOwn.setAvailable(false);
+                productChange.setAvailable(false);
+                productRepository.save(productOwn);
+                productRepository.save(productChange);
+            }
+
             return Optional.of(updatedExchange);
+
         } catch (Exception e) {
             throw new IllegalArgumentException("Error while updating exchange: " + e.getMessage());
         }
