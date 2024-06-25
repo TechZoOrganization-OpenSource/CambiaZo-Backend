@@ -11,10 +11,12 @@ import techzo.com.example.cambiazo.exchanges.domain.model.queries.GetUserByIdQue
 import techzo.com.example.cambiazo.exchanges.domain.services.UserCommandService;
 import techzo.com.example.cambiazo.exchanges.domain.services.UserQueryService;
 import techzo.com.example.cambiazo.exchanges.interfaces.rest.resources.CreateUserResource;
+import techzo.com.example.cambiazo.exchanges.interfaces.rest.resources.UpdateUserMembershipResource;
 import techzo.com.example.cambiazo.exchanges.interfaces.rest.resources.UpdateUserResource;
 import techzo.com.example.cambiazo.exchanges.interfaces.rest.resources.UserResource;
 import techzo.com.example.cambiazo.exchanges.interfaces.rest.transform.CreateUserCommandFromResourceAssembler;
 import techzo.com.example.cambiazo.exchanges.interfaces.rest.transform.UpdateUserCommandFromResourceAssembler;
+import techzo.com.example.cambiazo.exchanges.interfaces.rest.transform.UpdateUserMembershipFromResourceAssembler;
 import techzo.com.example.cambiazo.exchanges.interfaces.rest.transform.UserResourceFromEntityAssembler;
 
 import java.util.List;
@@ -128,6 +130,19 @@ public class UsersController {
         var userResource = UserResourceFromEntityAssembler.toResourceFromEntity(user.get());
         return ResponseEntity.ok(userResource);
     }
+
+    @Operation(summary = "Update User Membership by ID", description = "Update User Membership by ID.")
+    @PutMapping("/edit/membership/{userId}")
+    public ResponseEntity<UserResource> updateUserMembership(@PathVariable Long userId, @RequestBody UpdateUserMembershipResource resource) {
+        var updateUserMembershipCommand = UpdateUserMembershipFromResourceAssembler.toCommandFromResource(userId, resource);
+        var user = userCommandService.handle(updateUserMembershipCommand);
+        if (user.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        var userResource = UserResourceFromEntityAssembler.toResourceFromEntity(user.get());
+        return ResponseEntity.ok(userResource);
+    }
+
 
     /**
      * Deletes a User by ID.
