@@ -5,8 +5,18 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import techzo.com.example.cambiazo.exchanges.domain.model.commands.CreateExchangeCommand;
+import techzo.com.example.cambiazo.exchanges.domain.model.commands.UpdateExchangeStatusCommand;
 import techzo.com.example.cambiazo.exchanges.domain.model.valueobjects.ExchangeStatus;
 import techzo.com.example.cambiazo.shared.domain.model.aggregates.AuditableAbstractAggregateRoot;
+
+
+/**
+ * Represents Exchange in the Cambiazo system.
+ *
+ * @author CambiaZo - TechZo
+ * @version 1.0
+ *
+ */
 
 @Setter
 @Getter
@@ -43,6 +53,16 @@ public class Exchange extends AuditableAbstractAggregateRoot<Exchange> {
         this.userOwnId = productOwnId.getUserId();
         this.userChangeId = productChangeId.getUserId();
     }
+
+    public Exchange updateInformation(Product productOwnId, Product productChangeId, String status) {
+        this.productOwnId = productOwnId;
+        this.productChangeId = productChangeId;
+        this.status = new ExchangeStatus(status);
+        this.userOwnId = productOwnId.getUserId();
+        this.userChangeId = productChangeId.getUserId();
+        return this;
+    }
+
 
     public Long getExchangeId() {
         return getId();

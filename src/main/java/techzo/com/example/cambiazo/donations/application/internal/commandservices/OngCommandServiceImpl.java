@@ -49,10 +49,6 @@ public class OngCommandServiceImpl implements OngCommandService{
 
     @Override
     public Optional<Ong>handle(UpdateOngCommand command){
-        //verificar si hay un ong o no
-        if(ongRepository.existsByNameAndEmail(command.name(), command.email())){
-            throw new IllegalArgumentException("Ong with name and already exists");
-        }
         var result = ongRepository.findById(command.id());
         if(result.isEmpty()){
             throw new IllegalArgumentException("Ong does not exist");
@@ -64,7 +60,7 @@ public class OngCommandServiceImpl implements OngCommandService{
             CategoryOng categoryOng = categoryOngRepository.findById(command.categoryOngId())
                     .orElseThrow(() -> new CategoryOngNotFoundException(command.categoryOngId()));
             var updatedOng = ongRepository.save(ongToUpdate.updateInformation(command.name(), command.type(), command.aboutUs(), command.missionAndVision(),
-                    command.supportForm(), command.address(), command.email(), command.phone(), command.logo(), command.website(), categoryOng));
+                    command.supportForm(), command.address(), command.email(), command.phone(), command.logo(), command.website(), categoryOng, command.schedule()));
             return Optional.of(updatedOng);
         }catch (Exception e){
             throw new IllegalArgumentException("Error while updating ong: " + e.getMessage());

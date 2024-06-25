@@ -1,9 +1,12 @@
 package techzo.com.example.cambiazo.exchanges.application.internal.commandservices;
 
 import org.springframework.stereotype.Service;
+import techzo.com.example.cambiazo.exchanges.domain.exceptions.ExchangeNotFoundException;
 import techzo.com.example.cambiazo.exchanges.domain.exceptions.ProductNotFoundException;
 import techzo.com.example.cambiazo.exchanges.domain.model.aggregates.Exchange;
+import techzo.com.example.cambiazo.exchanges.domain.model.aggregates.Product;
 import techzo.com.example.cambiazo.exchanges.domain.model.commands.CreateExchangeCommand;
+import techzo.com.example.cambiazo.exchanges.domain.model.commands.UpdateExchangeStatusCommand;
 import techzo.com.example.cambiazo.exchanges.domain.services.ExchangeCommandService;
 import techzo.com.example.cambiazo.exchanges.infrastructure.persistence.jpa.ExchangeRepository;
 import techzo.com.example.cambiazo.exchanges.infrastructure.persistence.jpa.ProductRepository;
@@ -32,6 +35,31 @@ public class ExchangeCommandServiceImpl implements ExchangeCommandService {
         exchangeRepository.save(exchange);
         return Optional.of(exchange);
     }
+
+    @Override
+    public Optional<Exchange> handle(UpdateExchangeStatusCommand command) {
+        var result = exchangeRepository.findById(command.id());
+        if (result.isEmpty()) {
+            throw new IllegalArgumentException("Exchange does not exist");
+        }
+        var exchangeToUpdate = result.get();
+        try {
+            Exchange exchange = exchangeRepository.findById(command.id())
+                    .orElseThrow(() -> new ExchangeNotFoundException(command.id()));
+
+            Product productOwn = productRepository.findById(exchange.getProductOwnId())
+                    .orElseThrow(() -> new ProductNotFoundException(exchange.getProductOwnId()));
+
+            Product productChange = productRepository.findById(exchange.getProductChangeId())
+                    .orElseThrow(() -> new ProductNotFoundException(exchange.getProductChangeId()));
+
+            var updatedExchange = exchangeRepository.save(exchangeToUpdate.updateInformation(productOwn, productChange, command.status()));
+            return Optional.of(updatedExchange);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Error while updating exchange: " + e.getMessage());
+        }
+    }
+
 
     @Override
     public boolean handleDeleteExchange(Long id) {

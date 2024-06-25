@@ -10,6 +10,15 @@ import lombok.Setter;
 import techzo.com.example.cambiazo.exchanges.domain.model.commands.CreateProductCommand;
 import techzo.com.example.cambiazo.shared.domain.model.aggregates.AuditableAbstractAggregateRoot;
 
+
+/**
+ * Represents a Product in the exchange system.
+ *
+ * @author CambiaZo - TechZo
+ * @version 1.0
+ *
+ */
+
 @Setter
 @Getter
 @Entity
