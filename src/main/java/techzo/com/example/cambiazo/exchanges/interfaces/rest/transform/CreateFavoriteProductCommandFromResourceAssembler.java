@@ -6,6 +6,6 @@ import techzo.com.example.cambiazo.exchanges.interfaces.rest.resources.CreateFav
 public class CreateFavoriteProductCommandFromResourceAssembler {
 
     public static CreateFavoriteProductCommand toCommandFromResource(CreateFavoriteProductResource resource) {
-        return new CreateFavoriteProductCommand(resource.userId(), resource.productId());
+        return new CreateFavoriteProductCommand(resource.productId(), resource.userId());
     }
 }
